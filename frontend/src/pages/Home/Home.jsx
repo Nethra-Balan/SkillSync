@@ -9,9 +9,13 @@ const Home = () => {
 	return (
 		<div className={styles.main_container}>
 			<nav className={styles.navbar}>
+				<button className={styles.white_btn} onClick={() => window.location.href = "/profile"}>
+					Profile
+				</button>
 				<button className={styles.white_btn} onClick={handleLogout}>
 					Logout
 				</button>
+				
 			</nav>
 		</div>
 	);

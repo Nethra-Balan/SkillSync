@@ -8,6 +8,7 @@ const path = require("path");
 const connection = require("./config/db");
 const authRoutes = require("./routes/auth");
 const profileRoutes = require("./routes/profile");
+const mentorshipRoutes = require("./routes/mentorship");
 
 // database connection
 connection();
@@ -20,6 +21,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // routes
 app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
+app.use("/api/mentorship", mentorshipRoutes);
 
 
 const PORT = process.env.PORT || 5000;

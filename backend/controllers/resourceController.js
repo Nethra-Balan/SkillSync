@@ -24,7 +24,7 @@ const getResourcesBySkill = async (req, res) => {
   const { skill } = req.query;
   try {
     const query = skill ? { skill: new RegExp(`^${skill}`, "i")} : {};
-    const resources = await Resource.find(query).populate("uploaderId", "firstName lastName")
+    const resources = await Resource.find(query).populate("uploaderId", "firstName lastName profilePicture")
       .lean();
 
     resources.sort((a, b) => {

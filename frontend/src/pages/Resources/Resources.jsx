@@ -3,6 +3,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import styles from "./Resources.module.css";
+import defaultProfile from "../../assets/images/default-profile.png";
 
 const Resources = () => {
   const userId = localStorage.getItem("userId");
@@ -15,12 +16,12 @@ const Resources = () => {
   const [uploadSkill, setUploadSkill] = useState("");
 
   useEffect(() => {
-  const delayDebounce = setTimeout(() => {
-    fetchResources();
-  }, 200); 
+    const delayDebounce = setTimeout(() => {
+      fetchResources();
+    }, 200);
 
-  return () => clearTimeout(delayDebounce);
-}, [skillFilter]);
+    return () => clearTimeout(delayDebounce);
+  }, [skillFilter]);
 
 
   const fetchResources = async () => {
@@ -75,18 +76,10 @@ const Resources = () => {
   return (
     <div className={styles.page}>
       <ToastContainer autoClose={2000} />
-      <div className={styles.controls}>
-        <input
-          className={styles.input}
-          placeholder="Filter by skill"
-          value={skillFilter}
-          onChange={e => setSkillFilter(e.target.value)}
-        />
-        <button className={styles.btn} onClick={fetchResources}>Search</button>
-      </div>
-
+      <h1>Skill<span>Stack</span></h1>
+      <h3>Contribute</h3>
       <form className={styles.uploadForm} onSubmit={handleUpload}>
-        <h3>Upload Resource</h3>
+      
         <input
           className={styles.input}
           placeholder="Title"
@@ -101,25 +94,51 @@ const Resources = () => {
         />
         <input
           type="file"
+          id="fileUpload"
           accept=".pdf,image/*"
+          style={{ display: "none" }}
           onChange={e => setFile(e.target.files[0])}
         />
+
+        <label htmlFor="fileUpload" className={styles.uploadIconBtn}>
+          <i class="bi bi-file-earmark-arrow-up-fill"></i>
+        </label>
         <button type="submit" className={styles.btn}>Upload</button>
       </form>
 
+
       <h3>Resources</h3>
+      <div className={styles.controls}>
+        <input
+          className={styles.input}
+          placeholder="Filter by skill"
+          value={skillFilter}
+          onChange={e => setSkillFilter(e.target.value)}
+        />
+        <button className={styles.searchbtn} onClick={fetchResources}><i class="bi bi-search-heart-fill"></i></button>
+      </div>
+
+      
       <div className={styles.grid}>
         {resources.map(res => (
           <div key={res._id} className={styles.card}>
-            <p className={styles.title}>{res.title}</p>
-            <p><strong>Skill:</strong> {res.skill}</p>
-            <p><strong>By:</strong> {res.uploaderId.firstName} {res.uploaderId.lastName}</p>
-            <a href={res.fileUrl.startsWith('http') ? res.fileUrl : `http://localhost:5000${res.fileUrl}`} download target="_blank" rel="noopener noreferrer">
-              View / Download
-            </a>
-            <p><strong>Avg Rating:</strong> {averageRating(res.ratings)}</p>
+            <div className={styles.cardHeader}>
+              <p className={styles.title}>{res.title}</p>
+              <a href={res.fileUrl.startsWith('http') ? res.fileUrl : `http://localhost:5000${res.fileUrl}`} download target="_blank" rel="noopener noreferrer">
+                📄 View
+              </a>
+            </div>
+
+
+            <div className={styles.avatarName}>
+              <img className={styles.avatar} src={res.uploaderId.profilePicture ? `http://localhost:5000${res.uploaderId.profilePicture}` : defaultProfile} alt="profile" />
+              <span>{res.uploaderId?.firstName} {res.uploaderId?.lastName}</span>
+            </div>
+
+            <p><strong>Rating:</strong> {averageRating(res.ratings)}</p>
+
             <div className={styles.rating}>
-              {[1,2,3,4,5].map(v => (
+              {[1, 2, 3, 4, 5].map(v => (
                 <span
                   key={v}
                   className={v <= averageRating(res.ratings) ? styles.selectedStar : styles.star}
@@ -128,6 +147,7 @@ const Resources = () => {
               ))}
             </div>
           </div>
+
         ))}
       </div>
     </div>

@@ -1,0 +1,29 @@
+.postsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.postCard {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.postCard:hover {
+  background: #f7f7f7;
+}
+.activeCard {
+  background-color: #e7f3ff;
+  border-color: #007bff;
+}
+
+.postDetails {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}

@@ -9,6 +9,8 @@ const connection = require("./config/db");
 const authRoutes = require("./routes/auth");
 const profileRoutes = require("./routes/profile");
 const mentorshipRoutes = require("./routes/mentorship");
+const resourceRoutes = require("./routes/resource");
+const forumRoutes = require("./routes/forum");
 
 // database connection
 connection();
@@ -22,7 +24,8 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/mentorship", mentorshipRoutes);
-
+app.use("/api/resources", resourceRoutes);
+app.use("/api/forum", forumRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, console.log(`Listening on port ${PORT}...`));

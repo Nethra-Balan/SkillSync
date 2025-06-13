@@ -15,6 +15,12 @@ const Home = () => {
 				<button className={styles.white_btn} onClick={() => window.location.href = "/mentorship"}>
 					Connect
 				</button>
+				<button className={styles.white_btn} onClick={() => window.location.href = "/resources"}>
+					Resources
+				</button>
+				<button className={styles.white_btn} onClick={() => window.location.href = "/forum"}>
+					Discussions
+				</button>
 				<button className={styles.white_btn} onClick={handleLogout}>
 					Logout
 				</button>

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./DiscussionForum.module.css";
+import defaultProfile from "../../assets/images/default-profile.png";
+import NavBar from "../../components/NavBar/NavBar";
 
 const DiscussionForum = () => {
   const userId = localStorage.getItem("userId");
@@ -79,9 +81,10 @@ const DiscussionForum = () => {
 
   return (
     <div className={styles.forum}>
+      <NavBar />
       <h2>Skill<span>Space</span></h2>
 
-      {/* Top Controls */}
+
       <div className={styles.topControls}>
         <input
           className={styles.input}
@@ -94,23 +97,34 @@ const DiscussionForum = () => {
         </button>
       </div>
 
-      {/* Posts */}
+
       <div className={styles.postsGrid}>
-        {posts.map((post) => (
-          <div
-            key={post._id}
-            className={styles.postCard}
-            onClick={() => fetchPostDetails(post._id)}
-          >
-            <h4>{post.title}</h4>
-            <p><strong><i class="bi bi-tag-fill"></i></strong> {post.skill}</p>
-            <p><strong></strong> {post.userId?.firstName} {post.userId?.lastName}</p>
-            <p><strong><i class="bi bi-suit-heart-fill"></i></strong> {post.likes?.length || 0}</p>
-          </div>
-        ))}
+        {[...posts]
+          .sort((a, b) => (b.likes?.length || 0) - (a.likes?.length || 0))
+          .map((post) => (
+
+            <div
+              key={post._id}
+              className={styles.postCard}
+              onClick={() => fetchPostDetails(post._id)}
+            >
+              <h4>{post.title}</h4>
+              <div className={styles.postTags}>
+                <p><strong><i class="bi bi-tag-fill"></i>{post.skill}</strong> </p>
+                <p><strong><i className={`bi bi-suit-heart-fill ${styles.heartIcon}`}></i></strong> {post.likes?.length || 0}</p>
+              </div>
+              <div className={styles.userInfo}>
+                <img
+                  src={post.userId.profilePicture ? `http://localhost:5000${post.userId.profilePicture}` : defaultProfile}
+                  alt="profile"
+                  className={styles.profilePic}
+                />
+                <p><strong>{post.userId?.firstName} {post.userId?.lastName}</strong></p>
+              </div>
+            </div>
+          ))}
       </div>
 
-      {/* Create Post Modal */}
       {showCreateModal && (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
@@ -133,39 +147,61 @@ const DiscussionForum = () => {
               />
               <div className={styles.buttonRow}>
                 <button type="submit">Post</button>
-                <button type="button" onClick={() => setShowCreateModal(false)}>Cancel</button>
+                <button className={styles.closeBtn} onClick={() => setShowCreateModal(false)}>×</button>
               </div>
             </form>
           </div>
         </div>
       )}
 
-      {/* Post Details Modal */}
       {showDetailsModal && selectedPost && (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
             <h3>{selectedPost.title}</h3>
-            <p><strong>Skill:</strong> {selectedPost.skill}</p>
+            <div className={styles.postTags}>
+              <p><strong><i class="bi bi-tag-fill"></i>{selectedPost.skill}</strong> </p>
+              <button
+                className={styles.iconBtn}
+                onClick={() => likePost(selectedPost._id)}
+              >
+                <i
+                  className={`bi bi-suit-heart-fill`}
+                  style={{ color: selectedPost.likes.includes(userId) ? "red" : "white" }}
+                ></i>
+              </button>
+
+            </div>
             <p>{selectedPost.content}</p>
-            <p>Likes: {selectedPost.likes.length}</p>
-            <button onClick={() => likePost(selectedPost._id)}>👍 Like</button>
 
             <h4>Comments</h4>
             <div className={styles.chatBox}>
-              {selectedPost.comments.map((c, i) => (
-                <div key={i} className={styles.commentBubble}>
-                  <strong>{c.userId.firstName}:</strong> {c.text}
-                </div>
-              ))}
+              {selectedPost.comments.length === 0 ? (
+                <p>No comments yet.</p>
+              ) : (
+                selectedPost.comments.map((c, i) => (
+                  <div key={i} className={styles.commentBubble}>
+                    <strong>{c.userId.firstName}:</strong> {c.text}
+                  </div>
+                ))
+              )}
             </div>
 
-            <input
-              placeholder="Write a comment"
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-            />
-            <button onClick={() => addComment(selectedPost._id)}>Comment</button>
-            <button onClick={() => setShowDetailsModal(false)}>Close</button>
+
+            <div className={styles.commentBox}>
+              <input
+                placeholder="Write a comment"
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+              />
+              <button
+                className={styles.iconBtn}
+                onClick={() => addComment(selectedPost._id)}
+              >
+                <i className="bi bi-send-fill"></i>
+              </button>
+
+            </div>
+            <button className={styles.closeBtn} onClick={() => setShowDetailsModal(false)}>×</button>
           </div>
         </div>
       )}

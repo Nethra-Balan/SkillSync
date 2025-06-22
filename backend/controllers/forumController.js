@@ -17,7 +17,7 @@ const getAllPosts = async (req, res) => {
   const { skill } = req.query;
   try {
     const filter = skill ? { skill: { $regex: skill, $options: "i" } } : {};
-    const posts = await Post.find(filter).populate("userId", "firstName lastName").sort({ createdAt: -1 });
+    const posts = await Post.find(filter).populate("userId", "firstName lastName profilePicture").sort({ createdAt: -1 });
     res.json(posts);
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch posts", details: err });

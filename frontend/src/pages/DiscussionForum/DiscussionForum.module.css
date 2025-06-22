@@ -2,7 +2,7 @@
   max-width: 100%;
   height: 100vh;
   overflow-y: auto;
-  padding: 2rem;
+  padding: 1rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: url("../../assets/images/resource-bg.gif");
   color: #f1f1f1;
@@ -73,7 +73,8 @@
 
 .postsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
+
   gap: 1.5rem;
   margin-top: 2rem;
   padding: 0 6rem;
@@ -82,6 +83,8 @@
 .postCard {
   background: linear-gradient(to bottom right, rgba(13, 68, 47, 0.4), rgba(2, 34, 163, 0.7));
   padding: 1.2rem;
+  padding-top: 0;
+  padding-left: 2rem;
   border: 1px solid #444;
   border-radius: 10px;
   cursor: pointer;
@@ -89,9 +92,18 @@
   box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
 
+.heartIcon{
+  color: red;
+}
+
+.postTags{
+  display: flex;
+  gap: 1rem;
+}
+
 .postCard:hover {
   transform: translateY(-3px);
-  background: rgba(255, 255, 255, 0.06);
+  background: linear-gradient(to bottom right, rgba(17, 139, 14, 0.4), rgba(2, 34, 163, 0.7));
 }
 
 .activeCard {
@@ -100,7 +112,8 @@
 }
 
 .postCard h4 {
-  font-size: 1.1rem;
+  margin-top: 1.25rem;
+  font-size: 1.5rem;
   color: rgb(125, 144, 255);
   margin-bottom: 0.5rem;
 }
@@ -110,6 +123,26 @@
   color: #ccc;
   margin: 0.2rem 0;
 }
+
+
+
+
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+.profilePic {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #444;
+}
+
 
 .postDetails {
   margin-top: 2rem;
@@ -158,16 +191,20 @@
 .topControls {
   display: flex;
   justify-content: center;
-  align-items: center;
   margin-bottom: 1rem;
   gap: 1rem;
 }
-
+.topControls input{
+  background-color: #2a2a2aab;
+  border-radius: 20px;
+  padding-left: 20px;
+}
 .contributeBtn {
-  padding: 0.6rem 1.2rem;
   background-color: #00bcd4;
   border: none;
-  border-radius: 5px;
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
   color: white;
   cursor: pointer;
   font-size: 0.95rem;
@@ -183,7 +220,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(10, 10, 10, 0.85);
+  background: rgba(4, 0, 52, 0.85);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   display: flex;
@@ -205,7 +242,8 @@
 }
 
 .modalContent {
-  background: rgba(30, 30, 30, 0.95);
+  position: relative;
+  background: rgba(47, 48, 73, 0.553);
   padding: 2rem 2.5rem;
   border-radius: 12px;
   width: 90%;
@@ -234,11 +272,10 @@
 .modalContent textarea {
   width: 100%;
   padding: 0.75rem;
-  background-color: #1e1e1e;
+  background-color: #1e1e1e8e;
   border: 1px solid #555;
   color: #f1f1f1;
   border-radius: 6px;
-  margin-bottom: 1rem;
   transition: border-color 0.3s;
 }
 
@@ -249,18 +286,19 @@
   background-color: #262626;
 }
 
-.modalContent button {
-  padding: 0.6rem 1.4rem;
+.modalContent .closeBtn {
   background-color: #00bcd4;
   border: none;
-  border-radius: 6px;
+  height: 50px;
+  width: 50px;
+  border-radius: 100%;
   color: white;
   cursor: pointer;
   font-size: 0.95rem;
   transition: background 0.3s, transform 0.2s;
 }
 
-.modalContent button:hover {
+.modalContent .closeBtn:hover {
   background-color: #009bb0;
   transform: translateY(-2px);
 }
@@ -268,15 +306,15 @@
 
 .chatBox {
   margin-top: 1rem;
-  max-height: 250px;
+  max-height: 200px;
   overflow-y: auto;
-  background-color: #202020;
+  background-color: #20202098;
   padding: 1rem;
   border-radius: 6px;
 }
 
 .commentBubble {
-  background-color: #2a2a2a;
+  background-color: #2e2b4896;
   padding: 0.7rem;
   border-radius: 10px;
   margin-bottom: 0.5rem;
@@ -298,4 +336,29 @@
 
 .modalContent .closeBtn:hover {
   color: #fff;
+}
+
+.commentBox{
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.iconBtn {
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.iconBtn:hover {
+  transform: scale(1.1);
 }

@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import styles from "./Resources.module.css";
 import defaultProfile from "../../assets/images/default-profile.png";
+import Navbar from "../../components/Navbar/Navbar";
 
 const Resources = () => {
   const userId = localStorage.getItem("userId");
@@ -75,6 +76,7 @@ const Resources = () => {
 
   return (
     <div className={styles.page}>
+      <Navbar />
       <ToastContainer autoClose={2000} />
       <h1>Skill<span>Stack</span></h1>
       <h3>Contribute</h3>

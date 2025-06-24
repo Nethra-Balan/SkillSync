@@ -77,7 +77,6 @@ const getRequestsForMentor = async (req, res) => {
   try {
     const requests = await MentorshipRequest.find({
       mentorId: req.params.mentorId,
-      status: "pending",
     }).populate("menteeId", "firstName lastName email");
 
     res.json(requests);
@@ -85,6 +84,7 @@ const getRequestsForMentor = async (req, res) => {
     res.status(500).json({ error: "Failed to fetch mentor requests", details: err });
   }
 };
+
 
 const withdrawMentorshipRequest = async (req, res) => {
   const { id } = req.params;

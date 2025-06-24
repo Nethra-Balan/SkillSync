@@ -21,6 +21,9 @@ const Home = () => {
 				<button className={styles.white_btn} onClick={() => window.location.href = "/forum"}>
 					Discussions
 				</button>
+				<button className={styles.white_btn} onClick={() => window.location.href = "/quiz"}>
+					Quiz
+				</button>
 				<button className={styles.white_btn} onClick={handleLogout}>
 					Logout
 				</button>

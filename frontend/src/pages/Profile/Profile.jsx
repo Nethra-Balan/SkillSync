@@ -94,6 +94,10 @@ const Profile = () => {
     return (
         <div className={styles.profilePage}>
             <div className={styles.profileContainer}>
+                <div className={styles.closeButton} onClick={() => window.history.back()}>
+                    &times;
+                </div>
+
                 <form onSubmit={handleSubmit} encType="multipart/form-data" className={styles.profileForm}>
                     <h1>Profile</h1>
 

@@ -8,6 +8,7 @@ import Profile from "./pages/Profile/Profile";
 import Mentorship from "./pages/Mentorship/Mentorship";
 import Resources from "./pages/Resources/Resources";
 import DiscussionForum from "./pages/DiscussionForum/DiscussionForum";
+import Quiz from "./pages/Quiz/Quiz";
 import Navbar from "./components/Navbar/Navbar";
 import "./App.module.css";
 
@@ -31,6 +32,7 @@ function App() {
 				<Route path="/mentorship" element={<Mentorship />} />
 				<Route path="/resources" element={<Resources />} />
 				<Route path="/forum" element={<DiscussionForum />} />
+				<Route path="/quiz" element={<Quiz />} />
 			</Routes>
 		</div>
 	);

@@ -1,0 +1,386 @@
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: url("../../assets/images/resource-bg.jpg");
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.headerTitle {
+  font-size: 2.5rem;
+  color: rgb(165, 239, 255);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.headerTitle span {
+  color: rgb(62, 136, 255);
+}
+.card {
+  background: linear-gradient(to bottom right, rgba(13, 68, 47, 0.4), rgba(2, 34, 163, 0.7));
+  border-radius: 10px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  margin: auto;
+}
+
+@media (min-width: 768px) {
+  .headerTitle {
+      font-size: 3rem;
+  }
+  .card {
+      padding: 0rem 2rem 2rem 2rem;
+      max-width: 32rem;
+  }
+  .quizCard {
+      max-width: 42rem;
+  }
+}
+
+.textCenter {
+    text-align: center;
+}
+
+.h2Title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 1.5rem;
+}
+
+.marginBottom4 {
+    margin-bottom: 1rem;
+}
+
+.marginBottom6 {
+    margin-bottom: 1.5rem;
+}
+
+.formLabel {
+  display: block;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.formInput, .formSelect {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  appearance: none;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem 0rem;
+  padding-left: 0.75rem;
+  color: rgb(0, 0, 0);
+  line-height: 1.25;
+  transition: all 0.2s ease-in-out; 
+}
+
+.formSelect{
+  color: black;
+}
+
+.formInput:focus, .formSelect:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.5);
+  border-color: transparent;
+}
+
+.formSelect {
+  background-color: white;
+}
+
+.formInput:disabled, .formSelect:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.buttonPrimary {
+  background-color: #465ee5;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttonPrimary:hover {
+  background-color: #4338ca;
+  transform: scale(1.02);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.buttonPrimary:active {
+  transform: scale(0.98);
+}
+
+.buttonPrimaryDisabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.7;
+  box-shadow: none;
+}
+
+.buttonSecondary {
+  background-color: #e0e7ff;
+  color: #4f46e5;
+  border: 1px solid #4f46e5;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 0.5rem 1.25rem;
+  font-weight: 600;
+  border-radius: 0.375rem;
+}
+
+.buttonSecondary:hover {
+  background-color: #c7d2fe;
+  color: #312e81;
+  transform: scale(1.02);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.buttonSecondary:active {
+  transform: scale(0.98);
+}
+
+.buttonSecondaryDisabled {
+  background-color: #f3f4f6;
+  color: #9ca3af;
+  border-color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.5;
+  box-shadow: none;
+}
+
+.optionButton {
+  border:0;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  background-color: #f3f4f6;
+  color: rgb(0, 0, 0);
+  border-radius: 0.375rem;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 500;
+  width: 100%;
+}
+
+.optionButton:hover:not(.selected) {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
+  background-color: #eff6ff;
+}
+
+.optionButton.selected {
+  background-color: #3b82f6;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.optionButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.5);
+}
+
+.questionText {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.gridOptions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .gridOptions {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.quizNavigation {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 1.5rem;
+}
+
+.quizStatusText {
+    color: white;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.resultScoreText {
+    font-size: 1.25rem;
+    color: white;
+    margin-bottom: 1.5rem;
+}
+
+.scoreHighlight {
+    color: #2563eb;
+    font-weight: 800;
+}
+
+.reviewSection {
+    color: white;
+    text-align: left;
+    margin-bottom: 2rem;
+    max-height: 130rem;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.reviewAnswerText,
+.reviewQuestionText {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    word-break: break-word;
+}
+
+.reviewQuestionItem {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.reviewQuestionItem:last-child {
+    border-bottom: none;
+}
+
+.reviewQuestionText {
+    font-weight: 600;
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+}
+
+.reviewAnswerText {
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+}
+
+.answerCorrect {
+    color: #16a34a;
+    font-weight: 500;
+}
+
+.answerIncorrect {
+    color: #dc2626;
+    font-weight: 500;
+}
+
+.loadingSpinner {
+    animation: spin 1s linear infinite;
+    margin-right: 0.75rem;
+    height: 1.25rem;
+    width: 1.25rem;
+    color: white;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.flexCenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    padding: 1rem;
+}
+
+.modalContent {
+    background-color: rgb(255, 255, 255);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    max-width: 24rem;
+    width: 100%;
+    text-align: center;
+}
+
+.modalTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #dc2626;
+    margin-bottom: 1rem;
+}
+
+.modalMessage {
+    color: rgb(0, 0, 0);
+    margin-bottom: 1.5rem;
+}
+
+.modalContent .buttonPrimary {
+    width: auto;
+    padding: 0.5rem 1.5rem;
+    margin-left: 9.5rem;
+    font-size: 1rem;
+    border-radius: 0.375rem;
+}
+
+.h2Title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1.5rem;
+}
+
+.quizCompletedTitle {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.h3Title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.buttonPrimaryDisabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.7;
+  box-shadow: none;
+}
+
+.buttonSecondaryDisabled {
+  background-color: #f3f4f6;
+  color: #9ca3af;
+  border-color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.5;
+  box-shadow: none;
+}

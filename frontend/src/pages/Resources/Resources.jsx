@@ -76,6 +76,7 @@ const Resources = () => {
 
   return (
     <div className={styles.page}>
+      
       <Navbar />
       <ToastContainer autoClose={2000} />
       <h1>Skill<span>Stack</span></h1>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./DiscussionForum.module.css";
 import defaultProfile from "../../assets/images/default-profile.png";
-import NavBar from "../../components/NavBar/NavBar";
+import NavBar from "../../components/Navbar/Navbar";
 
 const DiscussionForum = () => {
   const userId = localStorage.getItem("userId");

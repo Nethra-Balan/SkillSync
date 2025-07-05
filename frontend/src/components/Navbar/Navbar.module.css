@@ -12,10 +12,14 @@
   font-weight: bold;
   white-space: nowrap;
   color: white;
-  padding: 0.75em 1em;
+  padding: 0.5em 1em;
   transition: text-shadow 0.25s ease-out;
   position: relative;
   z-index: 1;
+}
+
+.active{
+  color: black;
 }
 
 .navItem:not(.active):hover {

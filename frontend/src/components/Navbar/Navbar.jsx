@@ -1,12 +1,21 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
+import { Link, useLocation } from "react-router-dom";
 import styles from "./Navbar.module.css";
 
 const Navbar = () => {
   const indicatorRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState(0);
   const navItemsRef = useRef([]);
+  const location = useLocation();
 
-  const menuItems = ["Home", "profile", "resources", "mentorship", "forum"];
+  const navLinks = [
+    { name: "Home", path: "/" },
+    { name: "Connect", path: "/mentorship" },
+    { name: "Resources", path: "/resources" },
+    { name: "Discussions", path: "/forum" },
+    { name: "Quiz", path: "/quiz" },
+  ];
+
+  const activeIndex = navLinks.findIndex(link => link.path === location.pathname);
 
   useEffect(() => {
     const activeItem = navItemsRef.current[activeIndex];
@@ -18,18 +27,17 @@ const Navbar = () => {
 
   return (
     <nav className={styles.nav}>
-      {menuItems.map((label, index) => (
-        <a
+      {navLinks.map((link, index) => (
+        <Link
           key={index}
-          href="#"
-          className={`${styles.navItem} ${activeIndex === index ? styles.active : ""}`}
-          ref={(el) => (navItemsRef.current[index] = el)}
-          onClick={() => setActiveIndex(index)}
+          to={link.path}
+          ref={el => (navItemsRef.current[index] = el)}
+          className={`${styles.navItem} ${index === activeIndex ? styles.active : ""}`}
         >
-          {label}
-        </a>
+          {link.name}
+        </Link>
       ))}
-      <div className={styles.indicator} ref={indicatorRef}></div>
+      <span ref={indicatorRef} className={styles.indicator}></span>
     </nav>
   );
 };

@@ -16,7 +16,6 @@ function App() {
 	const user = localStorage.getItem("token");
 	// const location = useLocation();
 
-	// // Pages where Navbar should be hidden
 	// const hideNavbarPaths = ["/login", "/signup"];
 	// const shouldHideNavbar = hideNavbarPaths.includes(location.pathname);
 

@@ -17,7 +17,7 @@ const FeatureSection = ({ number, title, description, image, reverse, link }) =>
         <p>{description}</p>
 
         <button className={styles.button} onClick={handleNavigation}>
-          Explore {title}
+          {title}
         </button>
       </div>
       <img src={image} alt={title} className={styles.image} />

@@ -6,7 +6,8 @@
   height:100vh;
   align-items: center;
   padding: 4rem 8rem;
-  background-color: #121212;
+  background:linear-gradient(to bottom right, rgb(8, 0, 48), rgb(0, 0, 0));
+  /* background-color: black; */
   color: #fff;
 }
 
@@ -22,7 +23,7 @@
 
 .number {
   font-size: 6rem;
-  opacity: 0.05;
+  opacity: 0.12;
   position: absolute;
   top: -20px;
   left: 0;
@@ -44,7 +45,7 @@
   border-radius: 10px;
   width: 100%;
   object-fit: cover;
-  max-height: 300px;
+  height: 400px;
 }
 .button {
   margin-top: 1rem;

@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Goldman&display=swap');
+
+.hero {
+  /* background: linear-gradient(to right, #0f2027, #203a43, #2c5364); */
+  background: url("../../assets/images/mentorship-bg.jpg");
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.overlay {
+  text-align: center;
+  font-family: 'Goldman', cursive;
+}
+
+.overlay h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.overlay h1 span {
+  color: rgb(165, 239, 255);
+}
+
+.overlay h1 span span{
+    color: rgb(62, 136, 255);
+}
+
+.overlay p {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  color: #ddd;
+}
+
+.overlay button {
+  background: #00bcd4;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  color: white;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Goldman', cursive;
+  transition: background 0.3s ease;
+}
+
+.overlay button:hover {
+  background: #0194a6;
+}

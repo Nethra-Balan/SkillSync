@@ -1,5 +1,5 @@
 .main_container{
 	height: 100vh;
 	padding-top: 2rem;
-	background-color: black;
+	background: url("../../assets/images/resource-bg.jpg");
 }

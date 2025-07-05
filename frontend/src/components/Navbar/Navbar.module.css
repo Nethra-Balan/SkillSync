@@ -1,38 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Goldman&display=swap');
+
 .nav {
-  width: 100%;
-  position: relative;
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
   display: flex;
-  justify-content: flex-end;
-  font-size: 1.2rem;
-  background-color: transparent;
+  align-items: center;
+  gap: 1rem;
+  background: transparent;
+  z-index: 1000;
+}
+
+.navLinks {
+  display: flex;
+  gap: 0.5rem;
+  position: relative;
 }
 
 .navItem {
   text-decoration: none;
-  font-weight: bold;
-  white-space: nowrap;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: 'Goldman', cursive;
   color: white;
-  padding: 0.5em 1em;
-  transition: text-shadow 0.25s ease-out;
+  padding: 0.5rem 1rem;
+  border-radius: 1.25rem;
+  transition: background-color 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
   position: relative;
   z-index: 1;
 }
 
-.active{
-  color: black;
+.navItem:hover {
+  text-shadow: 0 0 0.1em white;
 }
 
-.navItem:not(.active):hover {
-  text-shadow: 0 0 0.1em white;
+.active {
+  background-color: white;
+  color: black;
+  border-radius: 1.25rem;
 }
 
 .indicator {
   height: 100%;
-  border-radius: 1.25em;
+  border-radius: 1.25rem;
   position: absolute;
   background-color: white;
   mix-blend-mode: difference;
-  transition: all  0.5s ease-in-out;
+  transition: all 0.4s ease;
   pointer-events: none;
   z-index: 0;
+}
+
+.profileContainer {
+  position: relative;
+}
+
+.profileIcon {
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.profileIcon:hover {
+  transform: scale(1.1);
+}
+
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 120%;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  overflow: hidden;
+  z-index: 5;
+}
+
+.dropdownItem {
+  padding: 0.75rem 1.2rem;
+  color: black;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+  font-family: 'Goldman', cursive;
+}
+
+.dropdownItem:hover {
+  background: rgba(132, 143, 171, 0.756);
 }

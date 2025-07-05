@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styles from "./Navbar.module.css";
 
@@ -6,16 +6,18 @@ const Navbar = () => {
   const indicatorRef = useRef(null);
   const navItemsRef = useRef([]);
   const location = useLocation();
+  const [showDropdown, setShowDropdown] = useState(false);
 
-  const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Connect", path: "/mentorship" },
-    { name: "Resources", path: "/resources" },
-    { name: "Discussions", path: "/forum" },
-    { name: "Quiz", path: "/quiz" },
+  const menuItems = [
+    { label: "Home", path: "/" },
+    { label: "Connect", path: "/mentorship" },
+    { label: "Resources", path: "/resources" },
+    { label: "Discussions", path: "/forum" },
+    { label: "Quiz", path: "/quiz" }
   ];
 
-  const activeIndex = navLinks.findIndex(link => link.path === location.pathname);
+  // Find active tab based on current route
+  const activeIndex = menuItems.findIndex(item => item.path === location.pathname);
 
   useEffect(() => {
     const activeItem = navItemsRef.current[activeIndex];
@@ -23,21 +25,43 @@ const Navbar = () => {
       indicatorRef.current.style.left = `${activeItem.offsetLeft}px`;
       indicatorRef.current.style.width = `${activeItem.offsetWidth}px`;
     }
-  }, [activeIndex]);
+  }, [activeIndex, location.pathname]);
+
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+		window.location.reload();
+    setShowDropdown(false);
+  };
 
   return (
     <nav className={styles.nav}>
-      {navLinks.map((link, index) => (
-        <Link
-          key={index}
-          to={link.path}
-          ref={el => (navItemsRef.current[index] = el)}
-          className={`${styles.navItem} ${index === activeIndex ? styles.active : ""}`}
-        >
-          {link.name}
-        </Link>
-      ))}
-      <span ref={indicatorRef} className={styles.indicator}></span>
+      <div className={styles.navLinks}>
+        {menuItems.map((item, index) => (
+          <Link
+            key={index}
+            to={item.path}
+            className={`${styles.navItem} ${activeIndex === index ? styles.active : ""}`}
+            ref={(el) => (navItemsRef.current[index] = el)}
+          >
+            {item.label}
+          </Link>
+        ))}
+        <div className={styles.indicator} ref={indicatorRef}></div>
+      </div>
+
+      <div className={styles.profileContainer}>
+        <i className={`bi bi-person-circle ${styles.profileIcon}`} onClick={toggleDropdown}></i>
+        {showDropdown && (
+          <div className={styles.dropdown}>
+            <Link to="/profile" className={styles.dropdownItem} onClick={() => setShowDropdown(false)}>Profile</Link>
+            <div className={styles.dropdownItem} onClick={handleLogout}>Logout</div>
+          </div>
+        )}
+      </div>
     </nav>
   );
 };

@@ -6,7 +6,7 @@
   background:url("../../assets/images/resource-bg.jpg");
   color: #f1f1f1;
   box-sizing: border-box;
-  overflow-y:auto
+  overflow-y:auto;
 }
 
 .page h1{
@@ -190,7 +190,6 @@
   object-fit: cover;
   border: 1px solid #666;
 }
-
 
 
 .sectionTitle {

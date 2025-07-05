@@ -1,4 +1,4 @@
-import { Route, Routes, Navigate, useLocation } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import Home from "./pages/Home/Home";
@@ -13,28 +13,31 @@ import Navbar from "./components/Navbar/Navbar";
 import "./App.module.css";
 
 function App() {
-	const user = localStorage.getItem("token");
-	// const location = useLocation();
+  const user = localStorage.getItem("token");
 
-	// const hideNavbarPaths = ["/login", "/signup"];
-	// const shouldHideNavbar = hideNavbarPaths.includes(location.pathname);
-
-	return (
-		<div className="app">
-
-			<Routes>
-				{user && <Route path="/" exact element={<Home />} />}
-				<Route path="/signup" exact element={<Signup />} />
-				<Route path="/login" exact element={<Login />} />
-				<Route path="/" element={<Navigate replace to="/login" />} />
-				<Route path="/profile" element={<Profile />} />
-				<Route path="/mentorship" element={<Mentorship />} />
-				<Route path="/resources" element={<Resources />} />
-				<Route path="/forum" element={<DiscussionForum />} />
-				<Route path="/quiz" element={<Quiz />} />
-			</Routes>
-		</div>
-	);
+  return (
+    <div className="app">
+      <Routes>
+        {user ? (
+          <>
+            <Route path="/" element={<Home />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/mentorship" element={<Mentorship />} />
+            <Route path="/resources" element={<Resources />} />
+            <Route path="/forum" element={<DiscussionForum />} />
+            <Route path="/quiz" element={<Quiz />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </>
+        ) : (
+          <>
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="*" element={<Navigate to="/login" replace />} />
+          </>
+        )}
+      </Routes>
+    </div>
+  );
 }
 
 export default App;

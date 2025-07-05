@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation , useNavigate} from "react-router-dom";
 import styles from "./Navbar.module.css";
 
 const Navbar = () => {
   const indicatorRef = useRef(null);
   const navItemsRef = useRef([]);
   const location = useLocation();
+  const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
 
   const menuItems = [
@@ -16,7 +17,7 @@ const Navbar = () => {
     { label: "Quiz", path: "/quiz" }
   ];
 
-  // Find active tab based on current route
+  
   const activeIndex = menuItems.findIndex(item => item.path === location.pathname);
 
   useEffect(() => {
@@ -31,11 +32,12 @@ const Navbar = () => {
     setShowDropdown(!showDropdown);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-		window.location.reload();
-    setShowDropdown(false);
-  };
+const handleLogout = () => {
+  localStorage.removeItem("token");
+  setShowDropdown(false);
+  window.location.replace("/login"); // Hard redirect, clears history
+};
+
 
   return (
     <nav className={styles.nav}>

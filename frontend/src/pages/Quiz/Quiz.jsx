@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import styles from './Quiz.module.css'; 
+import styles from './Quiz.module.css';
 import Navbar from '../../components/Navbar/Navbar';
 
 function Quiz() {
@@ -7,19 +7,17 @@ function Quiz() {
   const [difficulty, setDifficulty] = useState('easy');
   const [quizData, setQuizData] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [userAnswers, setUserAnswers] = useState({}); 
+  const [userAnswers, setUserAnswers] = useState({});
   const [score, setScore] = useState(0);
   const [quizStarted, setQuizStarted] = useState(false);
   const [quizFinished, setQuizFinished] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showErrorModal, setShowErrorModal] = useState(false);
+  const [showReviewModal, setShowReviewModal] = useState(false);
 
-  
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
-
-  
   const displayError = (message) => {
     setError(message);
     setShowErrorModal(true);
@@ -122,7 +120,6 @@ function Quiz() {
     if (currentQuestionIndex < quizData.length - 1) {
       setCurrentQuestionIndex(prev => prev + 1);
     } else {
-      // Last question, submit quiz
       handleSubmitQuiz();
     }
   };
@@ -138,7 +135,6 @@ function Quiz() {
     setQuizFinished(true);
   }, [quizData, userAnswers]);
 
-
   const startNewQuiz = () => {
     setQuizStarted(false);
     setQuizFinished(false);
@@ -150,25 +146,60 @@ function Quiz() {
     setDifficulty('easy');
     setError('');
     setShowErrorModal(false);
+    setShowReviewModal(false);
   };
 
-  
-  const ErrorModal = ({ message, onClose }) => {
-    return (
-      <div className={styles.modalOverlay}>
-        <div className={styles.modalContent}>
-          <h3 className={styles.modalTitle}>Error!</h3>
-          <p className={styles.modalMessage}>{message}</p>
-          <button
-            onClick={onClose}
-            className={styles.buttonPrimary}
-          >
-            Close
-          </button>
-        </div>
+  const ErrorModal = ({ message, onClose }) => (
+    <div className={styles.modalOverlay}>
+      <div className={styles.errorModalContent}>
+        <h3 className={styles.modalTitle}>Error!</h3>
+        <p className={styles.modalMessage}>{message}</p>
+        <button
+          onClick={onClose}
+          className={styles.buttonPrimary}
+        >
+          Close
+        </button>
       </div>
-    );
-  };
+    </div>
+  );
+
+  const ReviewModal = ({ quizData, userAnswers, onClose }) => (
+    <div className={styles.modalOverlay}>
+      <div className={styles.reviewModalContent}>
+        <h3 className={styles.modalTitle}>Review Your Answers</h3>
+        <div className={styles.reviewScroll}>
+          {quizData.map((q, index) => (
+            <div key={index} className={styles.reviewQuestionItem}>
+              <p className={styles.reviewQuestionText}>
+                {index + 1}. {q.question}
+              </p>
+              <p className={styles.reviewAnswerText}>
+                Your Answer:{" "}
+                <span className={
+                  userAnswers[index] === q.correctAnswer
+                    ? styles.answerCorrect
+                    : styles.answerIncorrect
+                }>
+                  {userAnswers[index] || 'No Answer'}
+                </span>
+              </p>
+              <p className={styles.reviewAnswerText}>
+                Correct Answer:{" "}
+                <span className={styles.answerCorrect}>{q.correctAnswer}</span>
+              </p>
+            </div>
+          ))}
+        </div>
+        <button
+          onClick={onClose}
+          className={styles.buttonPrimary}
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  );
 
   return (
     <div className={styles.appContainer}>
@@ -178,6 +209,13 @@ function Quiz() {
       </h1>
 
       {showErrorModal && <ErrorModal message={error} onClose={closeErrorModal} />}
+      {showReviewModal && (
+        <ReviewModal
+          quizData={quizData}
+          userAnswers={userAnswers}
+          onClose={() => setShowReviewModal(false)}
+        />
+      )}
 
       {!quizStarted && !quizFinished && (
         <div className={styles.card}>
@@ -187,123 +225,105 @@ function Quiz() {
               Topic:
             </label>
             <input
-                type="text"
-                id="topic"
-                value={topic}
-                onChange={(e) => setTopic(e.target.value)}
-                className={styles.formInput}
-                placeholder="Enter a specific topic"
-                disabled={loading}
-              />
-            </div>
-            <div className={styles.marginBottom6}>
-              <label htmlFor="difficulty" className={styles.formLabel}>
-                Difficulty:
-              </label>
-              <select
-                id="difficulty"
-                value={difficulty}
-                onChange={(e) => setDifficulty(e.target.value)}
-                className={styles.formSelect}
-                disabled={loading}
-              >
-                <option value="easy">Easy</option>
-                <option value="medium">Medium</option>
-                <option value="hard">Hard</option>
-              </select>
-            </div>
-            <button
-              onClick={generateQuiz}
-              className={styles.buttonPrimary}
+              type="text"
+              id="topic"
+              value={topic}
+              onChange={(e) => setTopic(e.target.value)}
+              className={styles.formInput}
+              placeholder="Enter a specific topic"
+              disabled={loading}
+            />
+          </div>
+          <div className={styles.marginBottom6}>
+            <label htmlFor="difficulty" className={styles.formLabel}>
+              Difficulty:
+            </label>
+            <select
+              id="difficulty"
+              value={difficulty}
+              onChange={(e) => setDifficulty(e.target.value)}
+              className={styles.formSelect}
               disabled={loading}
             >
-              {loading ? (
-                <div className={styles.flexCenter}>
-                  <svg className={styles.loadingSpinner} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className={styles.opacity25} cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className={styles.opacity75} fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Generating Quiz...
-                </div>
-              ) : 'Start Quiz'}
-            </button>
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
           </div>
-        )}
+          <button
+            onClick={generateQuiz}
+            className={styles.buttonPrimary}
+            disabled={loading}
+          >
+            {loading ? 'Generating Quiz...' : 'Start Quiz'}
+          </button>
+        </div>
+      )}
 
-        {quizStarted && !quizFinished && quizData.length > 0 && (
-          <div className={`${styles.card} ${styles.quizCard}`}>
-            <p className={`${styles.quizStatusText} ${styles.textCenter}`}>
-              Question {currentQuestionIndex + 1} of {quizData.length}
-            </p>
-            <div className={styles.marginBottom6}>
-              <h3 className={styles.questionText}>
-                {quizData[currentQuestionIndex].question}
-              </h3>
-              <div className={styles.gridOptions}>
-                {quizData[currentQuestionIndex].options.map((option, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => handleOptionSelect(option)}
-                    className={`${styles.optionButton} ${userAnswers[currentQuestionIndex] === option ? styles.selected : ''}`}
-                  >
-                    {option}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div className={styles.quizNavigation}>
-              {currentQuestionIndex < quizData.length - 1 ? (
+      {quizStarted && !quizFinished && quizData.length > 0 && (
+        <div className={`${styles.card} ${styles.quizCard}`}>
+          <p className={`${styles.quizStatusText} ${styles.textCenter}`}>
+            Question {currentQuestionIndex + 1} of {quizData.length}
+          </p>
+          <div className={styles.marginBottom6}>
+            <h3 className={styles.questionText}>
+              {quizData[currentQuestionIndex].question}
+            </h3>
+            <div className={styles.gridOptions}>
+              {quizData[currentQuestionIndex].options.map((option, idx) => (
                 <button
-                  onClick={handleNextQuestion}
-                  disabled={!userAnswers.hasOwnProperty(currentQuestionIndex)}
-                  className={`${styles.buttonSecondary} ${!userAnswers.hasOwnProperty(currentQuestionIndex) ? styles.buttonSecondaryDisabled : ''}`}
+                  key={idx}
+                  onClick={() => handleOptionSelect(option)}
+                  className={`${styles.optionButton} ${userAnswers[currentQuestionIndex] === option ? styles.selected : ''}`}
                 >
-                  Next Question
+                  {option}
                 </button>
-              ) : (
-                <button
-                  onClick={handleSubmitQuiz}
-                  disabled={!userAnswers.hasOwnProperty(currentQuestionIndex)}
-                  className={`${styles.buttonPrimary} ${!userAnswers.hasOwnProperty(currentQuestionIndex) ? styles.buttonPrimaryDisabled : ''}`}
-                >
-                  Submit Quiz
-                </button>
-              )}
-            </div>
-          </div>
-        )}
-
-        {quizFinished && (
-          <div className={`${styles.card} ${styles.quizCard} ${styles.textCenter}`}>
-            <h2 className={`${styles.h2Title} ${styles.quizCompletedTitle}`}>Quiz Completed!</h2>
-            <p className={styles.resultScoreText}>
-              You scored <span className={styles.scoreHighlight}>{score}</span> out of {quizData.length} questions.
-            </p>
-            <button
-              onClick={startNewQuiz}
-              className={styles.buttonPrimary}
-            >
-              Start New Quiz
-            </button>
-            <div className={styles.reviewSection}>
-              <h3 className={`${styles.h3Title} ${styles.reviewTitle}`}>Review Your Answers:</h3>
-              {quizData.map((q, index) => (
-                <div key={index} className={styles.reviewQuestionItem}>
-                  <p className={styles.reviewQuestionText}>
-                    {index + 1}. {q.question}
-                  </p>
-                  <p className={styles.reviewAnswerText}>Your Answer: <span className={`${userAnswers[index] === q.correctAnswer ? styles.answerCorrect : styles.answerIncorrect}`}>
-                    {userAnswers[index] || 'No Answer'}
-                  </span></p>
-                  <p className={styles.reviewAnswerText}>Correct Answer: <span className={styles.answerCorrect}>{q.correctAnswer}</span></p>
-                </div>
               ))}
             </div>
-
-            
           </div>
-        )}
-      </div>
+          <div className={styles.quizNavigation}>
+            {currentQuestionIndex < quizData.length - 1 ? (
+              <button
+                onClick={handleNextQuestion}
+                disabled={!userAnswers.hasOwnProperty(currentQuestionIndex)}
+                className={`${styles.buttonSecondary} ${!userAnswers.hasOwnProperty(currentQuestionIndex) ? styles.buttonSecondaryDisabled : ''}`}
+              >
+                Next Question
+              </button>
+            ) : (
+              <button
+                onClick={handleSubmitQuiz}
+                disabled={!userAnswers.hasOwnProperty(currentQuestionIndex)}
+                className={`${styles.buttonPrimary} ${!userAnswers.hasOwnProperty(currentQuestionIndex) ? styles.buttonPrimaryDisabled : ''}`}
+              >
+                Submit Quiz
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
+      {quizFinished && (
+        <div className={`${styles.card} ${styles.quizCard} ${styles.textCenter}`}>
+          <h2 className={`${styles.h2Title} ${styles.quizCompletedTitle}`}>Quiz Completed!</h2>
+          <p className={styles.resultScoreText}>
+            You scored <span className={styles.scoreHighlight}>{score}</span> out of {quizData.length} questions.
+          </p>
+          <button
+            onClick={startNewQuiz}
+            className={styles.buttonPrimary}
+          >
+            Start New Quiz
+          </button>
+          <button
+            onClick={() => setShowReviewModal(true)}
+            className={`${styles.buttonSecondary} ${styles.reviewButton}`}
+          >
+            Review Your Answers
+          </button>
+        </div>
+      )}
+    </div>
   );
 }
 

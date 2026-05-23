@@ -72,11 +72,11 @@ VITE_GEMINI_API_KEY=<your-gemini-api-key>
 ```bash
 # Start backend
 cd backend
-npm run dev
+npm start
 
 # Start frontend (in a separate terminal)
 cd ../frontend
-npm start
+npm run dev
 ```
 
 🔗 **Access the app**
